@@ -1,0 +1,109 @@
+<app-app-shell>
+    <div class="page">
+        <div class="top">
+            <div>
+                <h1>Incidents</h1>
+                <p>Manage and track reported incidents.</p>
+            </div><a mat-flat-button color="primary" routerLink="/incidents/new">+ New Incident</a>
+        </div>
+
+        <div><button
+  mat-raised-button
+ color="primary"
+  mat-raised-button
+  color="primary"
+  routerLink="/incidents/assign"
+>
+  <mat-icon>person_add</mat-icon>
+  Assign Incident
+        </button></div>
+
+        <div class="filters">
+    <mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Type here" #input>
+</mat-form-field></div>
+
+<div class="example-container mat-elevation-z8" >
+  
+<div class="spinner-container" >
+       <!--<mat-spinner></mat-spinner>--> 
+    </div>
+
+    
+
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <!-- First Column ID-->
+          <ng-container matColumnDef="incidentId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Incident ID </mat-header-cell>
+            <mat-cell *matCellDef="let element"> <a [routerLink]="['/incidents',element.id]">{{element.incidentId}} </a></mat-cell>
+          </ng-container>
+
+          <!-- Second Column -->
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.category}} </mat-cell>
+          </ng-container>
+
+          <!-- Third Column -->
+          <ng-container matColumnDef="priority">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Priority </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <div class="form-group">
+                <a target="_blank" 
+                  (click)="onNavigate(element.priority)" href="#">{{element.priority}}</a>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <!-- Fourth Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.status }} </mat-cell>
+          </ng-container>
+
+               <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Created </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.createdAt | date:'dd-MMM-yyyy HH:mm'}} </mat-cell>
+          </ng-container>
+          
+          <!-- Action Column -->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                 <button mat-icon-button  *ngIf="element.status !== 'CLOSED'" matTooltip="Click to Edit" class="iconbutton"
+                color="primary" >
+                <mat-icon [routerLink]="['/edit', element.id]">edit</mat-icon>
+              </button> </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="view">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> View </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                 <button mat-icon-button   matTooltip="Click to View" class="iconbutton"
+                color="primary" >
+                <mat-icon [routerLink]="['/incidents', element.id]">remove_red_eye</mat-icon>
+              </button> </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+                (click)="delete(element.id)" color="warn">
+                <mat-icon>delete</mat-icon>
+              </button> </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+      </div>
+      </div>
+      </app-app-shell>

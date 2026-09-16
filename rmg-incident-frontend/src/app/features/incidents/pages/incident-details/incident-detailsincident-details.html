@@ -1,0 +1,51 @@
+<app-app-shell>
+    <div class="page">
+        @if(incident){<div class="top">
+            <div><a routerLink="/incidents">← Incidents</a>
+                <h1>{{incident.incidentId}}</h1>
+                <p>{{incident.title}}</p>
+            </div>
+            <mat-form-field appearance="outline"><mat-label>Status</mat-label><mat-select [value]="incident.status"
+                    (selectionChange)="changeStatus($event.value)">@for(s of statuses;track s){<mat-option
+                        [value]="s">{{s}}</mat-option>}</mat-select></mat-form-field>
+        </div>
+        <div class="grid">
+            <section class="card">
+                <h3>Incident details</h3>
+                <div class="row"><b>Title</b><span>{{incident.title}}</span></div>
+                <div class="row"><b>Category</b><span>{{incident.category}}</span></div>
+                <div class="row"><b>Priority</b><span>{{incident.priority}}</span></div>
+                <div class="row"><b>Status</b><span>{{incident.status}}</span></div>
+                <div class="row"><b>Description</b><span>{{incident.description}}</span></div>
+            </section>
+            
+            <section class="card">
+                <h3>Audit</h3>
+                <div class="row"><b>Created</b><span>{{incident.createdAt | date:'dd-MMM-yyyy HH:mm'}}</span></div>
+                <div class="row"><b>Updated</b><span>{{incident.updatedAt | date:'dd-MMM-yyyy HH:mm'}}</span></div>
+                <div class="row"><b>Reported By</b><span>{{incident.reportedBy || '-'}}</span></div>
+                <div class="row"><b>Assigned To</b><span>{{incident.assignedTo || 'Unassigned'}}</span></div>
+            </section>
+        </div>
+
+         <div class="actions">
+
+          <button
+            type="button"
+            mat-flat-button color="primary"
+            (click)="cancel()"
+           
+          >
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+            Cancel
+
+          </button>
+          </div>
+        @if(error){<div class="error">{{error}}</div>}
+        } @else {<div>Loading...</div>}
+    </div>
+</app-app-shell>

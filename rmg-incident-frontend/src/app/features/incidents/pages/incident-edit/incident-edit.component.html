@@ -1,0 +1,428 @@
+<app-app-shell>
+    <div class="page">
+        <div class="head">
+            <div>
+                <h1>Edit Incident</h1>
+               
+            </div>
+        </div>
+
+<div class="edit-container">
+
+  <!-- Loading -->
+  <div
+    class="loading-container"
+    *ngIf="loading"
+  >
+
+    <mat-spinner
+      diameter="45">
+    </mat-spinner>
+
+    <p>
+      Loading incident...
+    </p>
+
+  </div>
+
+
+  <!-- Error -->
+  <mat-card
+    class="error-card"
+    *ngIf="!loading && errorMessage"
+  >
+
+    <mat-icon color="warn">
+      error
+    </mat-icon>
+
+    <span>
+      {{ errorMessage }}
+    </span>
+
+    <button
+      mat-button
+      color="primary"
+      routerLink="/incidents">
+
+      Back to Incidents
+
+    </button>
+
+  </mat-card>
+
+
+  <!-- Edit Form -->
+  <mat-card
+    class="edit-card"
+    *ngIf="!loading && incident"
+  >
+
+    <mat-card-header>
+
+      <div
+        mat-card-avatar
+        class="header-icon">
+
+        <mat-icon>
+          edit
+        </mat-icon>
+
+      </div>
+
+      <mat-card-title>
+        Edit Incident
+      </mat-card-title>
+
+      <mat-card-subtitle>
+
+        Incident ID:
+        <strong>
+          {{ incident.incidentId }}
+        </strong>
+
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+
+    <mat-card-content>
+
+      <form
+        [formGroup]="incidentForm"
+        (ngSubmit)="updateIncident()"
+      >
+
+
+        <!-- Incident ID -->
+        <div class="readonly-section">
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Incident ID
+            </mat-label>
+
+            <input
+              matInput
+              [value]="incident.incidentId"
+              readonly
+            >
+
+            <mat-icon
+              matSuffix
+              matTooltip="Incident ID cannot be changed"
+            >
+              lock
+            </mat-icon>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- Title -->
+        <div class="form-row">
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Incident Title
+            </mat-label>
+
+            <input
+              matInput
+              formControlName="title"
+              placeholder="Enter incident title"
+            >
+
+            <mat-error
+              *ngIf="f['title'].hasError('required')"
+            >
+              Incident title is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="f['title'].hasError('minlength')"
+            >
+              Title must contain at least 5 characters
+            </mat-error>
+
+            <mat-error
+              *ngIf="f['title'].hasError('maxlength')"
+            >
+              Title cannot exceed 200 characters
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- Description -->
+        <div class="form-row">
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width"
+          >
+
+            <mat-label>
+              Description
+            </mat-label>
+
+            <textarea
+              matInput
+              rows="5"
+              formControlName="description"
+              placeholder="Describe the incident"
+            ></textarea>
+
+            <mat-error
+              *ngIf="f['description'].hasError('required')"
+            >
+              Description is required
+            </mat-error>
+
+            <mat-error
+              *ngIf="f['description'].hasError('minlength')"
+            >
+              Description must contain at least 10 characters
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- Category / Priority -->
+        <div class="form-row two-columns">
+
+
+          <!-- Category -->
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Category
+            </mat-label>
+
+            <mat-select
+              formControlName="category"
+            >
+
+              <mat-option
+                *ngFor="let category of categories"
+                [value]="category"
+              >
+
+                {{ category }}
+
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error>
+              Category is required
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Priority -->
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Priority
+            </mat-label>
+
+            <mat-select
+              formControlName="priority"
+            >
+
+              <mat-option
+                *ngFor="let priority of priorities"
+                [value]="priority"
+              >
+
+                {{ priority }}
+
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error>
+              Priority is required
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- Status / Assigned To -->
+        <div class="form-row two-columns">
+
+
+          <!-- Status -->
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Status
+            </mat-label>
+
+            <mat-select
+              formControlName="status"
+            >
+
+              <mat-option
+                *ngFor="let status of statuses"
+                [value]="status"
+              >
+
+                {{ status }}
+
+              </mat-option>
+
+            </mat-select>
+
+            <mat-error>
+              Status is required
+            </mat-error>
+
+          </mat-form-field>
+
+
+          <!-- Assigned To -->
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Assigned To
+            </mat-label>
+
+            <input
+              matInput
+              formControlName="assignedTo"
+              placeholder="Enter username"
+            >
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- PIN -->
+        
+
+
+        <!-- Existing metadata -->
+        <div class="metadata">
+
+          <div>
+
+            <span class="metadata-label">
+              Reported By
+            </span>
+
+            <span>
+              {{ incident.reportedBy || '-' }}
+            </span>
+
+          </div>
+
+          <div>
+
+            <span class="metadata-label">
+              Created
+            </span>
+
+            <span>
+              {{ incident.createdAt | date:'medium' }}
+            </span>
+
+          </div>
+
+          <div>
+
+            <span class="metadata-label">
+              Last Updated
+            </span>
+
+            <span>
+              {{ incident.updatedAt | date:'medium' }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="actions">
+
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="cancel()"
+            
+          >
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+            Cancel
+
+          </button>
+
+
+          <button
+            type="submit"
+            mat-flat-button
+            color="primary"
+            [disabled]="incidentForm.invalid"
+          >
+
+            <mat-spinner
+              *ngIf="saving"
+              diameter="20"
+            >
+            </mat-spinner>
+
+            <mat-icon
+              *ngIf="!saving"
+            >
+              save
+            </mat-icon>
+
+            <span>
+              {{ saving ? 'Updating...' : 'Update Incident' }}
+            </span>
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+</div>
+</app-app-shell>

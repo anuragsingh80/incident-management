@@ -1,0 +1,46 @@
+<app-app-shell>
+    <div class="page">
+        <div class="head">
+            <div>
+                <h1>Create Incident</h1>
+               
+            </div>
+        </div>
+        <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-grid">
+                <mat-form-field><mat-label>Title</mat-label><input matInput formControlName="title"></mat-form-field>
+                <mat-form-field><mat-label>Category</mat-label><mat-select formControlName="category">
+                    <mat-option value="Hardware">Hardware</mat-option><mat-option
+                            value="Software">Software</mat-option><mat-option
+                            value="Network">Network</mat-option><mat-option
+                            value="Access">Access</mat-option>
+                            <mat-option value="DATABASE">DATABASE</mat-option>
+                             <mat-option value="APPLICATION">APPLICATION</mat-option>
+                            <mat-option value="Other">Other</mat-option>
+                        </mat-select></mat-form-field>
+                            
+                            
+
+                <mat-form-field class="full"><mat-label>Incident details</mat-label><textarea matInput rows="5"
+                        formControlName="description"></textarea></mat-form-field>
+
+                <mat-form-field><mat-label>Priority</mat-label><mat-select formControlName="priority"><mat-option
+                            value="LOW">Low</mat-option><mat-option value="MEDIUM">Medium</mat-option><mat-option
+                            value="HIGH">High</mat-option><mat-option
+                            value="CRITICAL">Critical</mat-option></mat-select></mat-form-field>
+
+
+                            
+               
+            </div>
+          
+            @if(error){<div class="error">{{error}}</div>}
+            <div class="actions"><a mat-raised-button
+                color="primary" routerLink="/incidents">Cancel</a><span class="spacer"></span><button
+                   mat-raised-button
+                color="primary"
+                    [disabled]="form.invalid||loading">{{loading?'Creating...':'Create
+                    Incident'}}</button></div>
+        </form>
+    </div>
+</app-app-shell>

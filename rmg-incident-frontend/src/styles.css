@@ -1,0 +1,22 @@
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #f5f7fb;
+  color: #202124;
+}
+* { box-sizing: border-box; }
+.page { max-width: 1200px; margin: 0 auto; padding: 24px; }
+.card { border-radius: 16px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.full { grid-column: 1 / -1; }
+.actions { display:flex; gap:12px; align-items:center; margin-top: 8px; }
+.error { color:#b3261e; font-size: 13px; margin: 4px 0 12px; }
+.success { color:#146c2e; font-size:14px; margin:10px 0; }
+.spacer { flex: 1; }
+@media(max-width: 700px) {
+  .page { padding: 14px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .full { grid-column: auto; }
+}

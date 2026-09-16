@@ -1,0 +1,40 @@
+.full {
+    width: 100%;
+    margin-bottom: 10px
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px
+}
+
+.sub {
+    color: #667085
+}
+
+.links {
+    margin-top: 16px
+}
+
+a {
+    color: #315efb;
+    text-decoration: none
+}
+
+.error {
+    color: #b3261e;
+    margin: 5px 0 12px
+}
+
+.success {
+    color: #146c2e;
+    margin: 8px 0
+}
+
+@media(max-width:500px) {
+    .grid {
+        grid-template-columns: 1fr
+    }
+}
+

@@ -1,0 +1,30 @@
+<app-app-shell>
+    <div class="page">
+        @if(incident){<div class="top">
+            <div><a routerLink="/incidents">← User</a>
+                
+            </div>
+            
+        </div>
+        <div class="grid">
+            <section class="card">
+                <h3>User details</h3>
+                <div class="row"><b>First Name</b><span>{{incident.firstName}}</span></div>
+                <div class="row"><b>Last Name</b><span>{{incident.lastName}}</span></div>
+                <div class="row"><b>Email</b><span>{{incident.email}}</span></div>
+                <div class="row"><b>Mogile</b><span>{{incident.mobile}}</span></div>
+            </section>
+            <section class="card">
+                <h3>Location</h3>
+                <div class="row"><b>Address</b><span>{{incident.address}}</span></div>
+                <div class="row"><b>PIN Code</b><span>{{incident.pincode}}</span></div>
+                <div class="row"><b>City / District</b><span>{{incident.city}}</span></div>
+                <div class="row"><b>State</b><span>{{incident.state}}</span></div>
+                <div class="row"><b>Country</b><span>{{incident.country}}</span></div>
+            </section>
+           
+        </div>
+        @if(errorMessage){<div class="error">{{errorMessage}}</div>}
+        } @else {<div>Loading...</div>}
+    </div>
+</app-app-shell>
